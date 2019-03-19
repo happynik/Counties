@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private let bag = DisposeBag()
+    private var appCoordinator: AppCoordinator!
+    
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        appCoordinator = AppCoordinator(window: window!)
+        appCoordinator.start()
+            .subscribe()
+            .disposed(by: bag)
         return true
     }
 
