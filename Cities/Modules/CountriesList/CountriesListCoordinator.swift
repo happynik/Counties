@@ -11,8 +11,6 @@ import RxSwift
 import Moya
 
 class CountriesListCoordinator: Coordinator<Void> {
-    private let bag = DisposeBag()
-    
     private var window: UIWindow
     
     init(window: UIWindow) {

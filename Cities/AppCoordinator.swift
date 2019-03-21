@@ -12,8 +12,6 @@ import RxSwift
 import RxCocoa
 
 class AppCoordinator: Coordinator<Void> {
-    private let bag = DisposeBag()
-    
     private let window: UIWindow
     
     init(window: UIWindow) {

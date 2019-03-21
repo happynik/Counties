@@ -16,7 +16,7 @@ class Coordinator<ResultType> {
     typealias CoordinationResult = ResultType
     
     /// Utility `DisposeBag` used by the subclasses.
-    let disposeBag = DisposeBag()
+    let bag = DisposeBag()
     
     /// Unique identifier.
     private let identifier = UUID()
