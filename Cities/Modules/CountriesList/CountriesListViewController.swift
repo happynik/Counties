@@ -25,23 +25,34 @@ class CountriesListViewController: UIViewController {
     }
     
     private func setupUI() {
-//        tableView.register(UINib(nibName: CountryCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: CountryCell.reuseIdentifier)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(UINib(nibName: CountryCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: CountryCell.reuseIdentifier)
         tableView.dataSource = nil
     }
     
     private func setupBindings() {
         viewModel?.countries
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (_, country, cell) in
-                cell.textLabel?.text = country.name
-//                cell.fill(from: country)
+            .bind(to: tableView.rx.items(cellIdentifier: CountryCell.reuseIdentifier, cellType: CountryCell.self)) { (_, country, cell) in
+                cell.fill(from: country)
             }.disposed(by: bag)
     }
 }
 
 extension CountryCell {
     func fill(from country: Country) {
-        self.name.text = country.name
+        name.text = country.name
+        
+        popuation.text = country.population
+            .flatMap({ $0.presentString })
+            .flatMap({ "population: \($0)" }) ?? "unknown"
+    }
+}
+
+extension Int {
+    var presentString: String? {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = " "
+        formatter.numberStyle = .decimal
+        return formatter.string(for: self)
     }
 }

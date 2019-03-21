@@ -12,8 +12,5 @@ class CountryCell: UITableViewCell {
     static let reuseIdentifier = "CountryCell"
     
     @IBOutlet weak var name: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+    @IBOutlet weak var popuation: UILabel!
 }
