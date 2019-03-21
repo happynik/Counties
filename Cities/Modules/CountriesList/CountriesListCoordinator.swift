@@ -27,19 +27,10 @@ class CountriesListCoordinator: Coordinator<Void> {
         
         viewController.viewModel = viewModel
         
-//        viewModel.showRepository
-//            .subscribe(onNext: { [weak self] in self?.showRepository(by: $0, in: navigationController) })
-//            .disposed(by: disposeBag)
-
-//        viewModel.showLanguageList
-//            .flatMap { [weak self] _ -> Observable<String?> in
-//                guard let `self` = self else { return .empty() }
-//                return self.showLanguageList(on: viewController)
-//            }
-//            .filter { $0 != nil }
-//            .map { $0! }
-//            .bind(to: viewModel.setCurrentLanguage)
-//            .disposed(by: disposeBag)
+        viewModel.showCountry
+            .subscribe(onNext: { country in
+                print("open country\n\(country)")
+            }).disposed(by: bag)
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

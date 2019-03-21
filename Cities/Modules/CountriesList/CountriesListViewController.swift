@@ -16,7 +16,7 @@ class CountriesListViewController: UIViewController {
     
     private let bag = DisposeBag()
     
-    var viewModel: CountriesListViewModel?
+    var viewModel: CountriesListViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +30,15 @@ class CountriesListViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel?.countries
+        viewModel.countries
             .observeOn(MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: CountryCell.reuseIdentifier, cellType: CountryCell.self)) { (_, country, cell) in
                 cell.fill(from: country)
             }.disposed(by: bag)
+        
+        tableView.rx.modelSelected(Country.self)
+            .bind(to: viewModel.selectedCountry)
+            .disposed(by: bag)
     }
 }
 
