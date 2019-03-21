@@ -21,7 +21,7 @@ class AppCoordinator: Coordinator<Void> {
     }
     
     override func start() -> Observable<Void> {
-        let citiesListCoordinator = CitiesListCoordinator(window: window)
+        let citiesListCoordinator = CountriesListCoordinator(window: window)
         return coordinate(to: citiesListCoordinator)
     }
 }

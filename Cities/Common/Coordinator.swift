@@ -1,9 +1,10 @@
+
 //
-//  Coordinator.swift
-//  Cities
+//  BaseCoordinator.swift
+//  RepoSearcher
 //
-//  Created by Камилла Бадаева on 18/03/2019.
-//  Copyright © 2019 Nikita Moiseev. All rights reserved.
+//  Created by Arthur Myronenko on 6/29/17.
+//  Copyright © 2017 UPTech Team. All rights reserved.
 //
 
 import Foundation

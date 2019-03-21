@@ -1,5 +1,5 @@
 //
-//  CitiesListCoordinator.swift
+//  CountriesListCoordinator.swift
 //  Cities
 //
 //  Created by Камилла Бадаева on 18/03/2019.
@@ -8,8 +8,9 @@
 
 import Foundation
 import RxSwift
+import Moya
 
-class CitiesListCoordinator: Coordinator<Void> {
+class CountriesListCoordinator: Coordinator<Void> {
     private let bag = DisposeBag()
     
     private var window: UIWindow
@@ -19,8 +20,9 @@ class CitiesListCoordinator: Coordinator<Void> {
     }
     
     override func start() -> Observable<Void> {
-        let viewModel = CitiesListViewModel()
-        let viewController = CitiesListViewController()
+        let provider = CountriesService(provider: MoyaProvider<CountriesAPI>(plugins: [NetworkLoggerPlugin(verbose: true)]))
+        let viewModel = CountriesListViewModel(countriesService: provider)
+        let viewController = CountriesListViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         
         viewController.viewModel = viewModel
