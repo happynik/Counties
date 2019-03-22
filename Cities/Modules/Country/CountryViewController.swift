@@ -7,24 +7,28 @@
 //
 
 import UIKit
+import RxSwift
 
 class CountryViewController: UIViewController {
 
+    var viewModel: CountryViewModel!
+    
+    private let bag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupUI()
+        setupBindings()
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    private func setupUI() {
+        
     }
-    */
-
+    
+    private func setupBindings() {
+        viewModel.title
+            .subscribe(onNext: { title in
+                self.navigationItem.title = title
+            }).disposed(by: bag)
+    }
 }

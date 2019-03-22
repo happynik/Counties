@@ -18,21 +18,27 @@ class CountriesListCoordinator: Coordinator<Void> {
     }
     
     override func start() -> Observable<Void> {
-        let provider = CountriesService(provider: MoyaProvider<CountriesAPI>(plugins: [NetworkLoggerPlugin(verbose: true)]))
-        let viewModel = CountriesListViewModel(countriesService: provider)
+        let provider = MoyaProvider<CountriesAPI>(plugins: [NetworkLoggerPlugin(verbose: true)])
+        let viewModel = CountriesListViewModel(countriesService: CountriesService(provider: provider))
         let viewController = CountriesListViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         
         viewController.viewModel = viewModel
         
         viewModel.showCountry
-            .subscribe(onNext: { country in
+            .subscribe(onNext: { [unowned self] country in
                 print("open country\n\(country)")
+                _ = self.show(country: country, in: navigationController)
             }).disposed(by: bag)
         
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
         return Observable.never()
+    }
+    
+    private func show(country: Country, in navigationController: UINavigationController) -> Observable<Void> {
+        let countryCoordinator = CountryCoordinator(country: country, navigationController: navigationController)
+        return coordinate(to: countryCoordinator)
     }
 }
