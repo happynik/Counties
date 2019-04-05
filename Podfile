@@ -6,15 +6,15 @@ target 'Cities' do
   use_frameworks!
 
   # Pods for Cities
-  pod 'RxSwift',    '~> 4.0'
-  pod 'RxCocoa',    '~> 4.0'
-  pod 'Moya/RxSwift', '~> 12.0'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Moya/RxSwift'
 
   target 'CitiesTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'RxBlocking', '~> 4.0'
-    pod 'RxTest',     '~> 4.0'
+    pod 'RxBlocking'
+    pod 'RxTest'
   end
 
 end
