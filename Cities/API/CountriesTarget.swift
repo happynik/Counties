@@ -15,7 +15,6 @@ protocol CountriesTarget: TargetType {
 
 extension CountriesTarget {
     var requestParameters: [String: String] {
-        let additionalParameters = [String: String]()
         return ["fields": "name;capital;population;borders;currencies"]
             .merging(additionalParameters, uniquingKeysWith: { (arg1, arg2) -> String in return arg1 })
     }

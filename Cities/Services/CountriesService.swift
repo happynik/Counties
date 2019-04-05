@@ -28,6 +28,6 @@ class CountriesService: CountriesServiceProtocol {
     }
     
     func list(of codes: [String]) -> Single<[Country]> {
-        return provider.rx.request(.listOfCodes(codes)).map([Country].self)
+        return codes.isEmpty ? .never() : provider.rx.request(.listOfCodes(codes)).map([Country].self)
     }
 }

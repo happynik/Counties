@@ -20,7 +20,7 @@ class CountryViewController: UIViewController {
     private let bag = DisposeBag()
     var viewModel: CountryViewModel!
     
-//    private var test: Observable<String>
+    private var test: Observable<String>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,38 +29,44 @@ class CountryViewController: UIViewController {
     }
     
     private func setupUI() {
-        
+        nameLabel.text = nil
+        capitalLabel.text = nil
+        populationLabel.text = nil
+        borderedLabel.text = nil
+        currenciesLabel.text = nil
     }
     
     private func setupBindings() {
         viewModel.country
-            .observeOn(MainScheduler.instance)
             .map { $0.name }
-            .bind(to: nameLabel.rx.text)
+            .drive(nameLabel.rx.text)
             .disposed(by: bag)
         
         viewModel.country
-            .observeOn(MainScheduler.instance)
             .map { $0.capital }
-            .bind(to: capitalLabel.rx.text)
+            .drive(capitalLabel.rx.text)
+            .disposed(by: bag)
+        
+        viewModel.country
+            .map { c in c.population.flatMap { "Population: \($0)" } }
+            .drive(populationLabel.rx.text)
             .disposed(by: bag)
         
         viewModel.borderedCountries
-            .observeOn(MainScheduler.instance)
             .map { countries in
-                countries.compactMap { $0.name }
-                    .joined(separator: ",")
+                "Bordered: " + countries.compactMap({ $0.name }).joined(separator: ", ")
             }
-            .subscribe(onNext: { (str) in
-                print(str)
-            }, onError: { (er) in
-                print(er)
-            }, onCompleted: {
-                print("comp")
-            }, onDisposed: {
-                print("disp")
-            })
-//            .bind(to: borderedLabel.rx.text)
+            .drive(borderedLabel.rx.text)
+            .disposed(by: bag)
+        
+        viewModel.country
+            .map { country in
+                country.currencies.flatMap { c in
+                    let result = c.compactMap { $0.symbol }
+                    if result.isEmpty { return nil }
+                    return "Currencies: \(result.joined(separator: ", "))"
+                }
+            }.drive(currenciesLabel.rx.text)
             .disposed(by: bag)
     }
 }

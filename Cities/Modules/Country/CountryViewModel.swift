@@ -8,23 +8,25 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class CountryViewModel {
+    private let countriesService: CountriesServiceProtocol
     
     // MARK: - Input
     
     // MARK: - Output
     
     var title: Observable<String>
-    
-    var country: Observable<Country>
-    
-    var borderedCountries: Observable<[Country]>
+    var country: Driver<Country>
+    var borderedCountries: Driver<[Country]>
     
     init(country: Country, countriesService: CountriesServiceProtocol) {
+        self.countriesService = countriesService
         
         self.title = .just(country.name ?? "unknown")
         self.country = .just(country)
-        self.borderedCountries = countriesService.list(of: country.borders ?? []).asObservable()
+        self.borderedCountries = countriesService.list(of: country.borders ?? [])
+            .asDriver(onErrorJustReturn: [])
     }
 }
