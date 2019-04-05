@@ -32,8 +32,8 @@ class CountriesListViewController: UIViewController {
     private func setupBindings() {
         viewModel.countries
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: CountryCell.reuseIdentifier, cellType: CountryCell.self)) { (_, country, cell) in
-                cell.fill(from: country)
+            .bind(to: tableView.rx.items(cellIdentifier: CountryCell.reuseIdentifier, cellType: CountryCell.self)) {
+                $2.fill(from: $1)
             }.disposed(by: bag)
         
         tableView.rx.modelSelected(Country.self)

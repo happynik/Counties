@@ -138,8 +138,8 @@
 			children = (
 				A351A4C22244078600D0D031 /* CountryViewController.swift */,
 				A351A4C32244078600D0D031 /* CountryViewController.xib */,
-				A351A4C62244079900D0D031 /* CountryCoordinator.swift */,
 				A351A4C8224407A300D0D031 /* CountryViewModel.swift */,
+				A351A4C62244079900D0D031 /* CountryCoordinator.swift */,
 			);
 			path = Country;
 			sourceTree = "<group>";

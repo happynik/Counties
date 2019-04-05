@@ -12,6 +12,8 @@ import Moya
 
 protocol CountriesServiceProtocol {
     func all() -> Single<[Country]>
+    
+    func list(of codes: [String]) -> Single<[Country]>
 }
 
 class CountriesService: CountriesServiceProtocol {
@@ -23,5 +25,9 @@ class CountriesService: CountriesServiceProtocol {
     
     func all() -> Single<[Country]> {
         return provider.rx.request(.all).map([Country].self)
+    }
+    
+    func list(of codes: [String]) -> Single<[Country]> {
+        return provider.rx.request(.listOfCodes(codes)).map([Country].self)
     }
 }

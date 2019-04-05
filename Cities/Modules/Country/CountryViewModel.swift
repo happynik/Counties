@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 
 class CountryViewModel {
-    private let country: Country
     
     // MARK: - Input
     
@@ -18,9 +17,14 @@ class CountryViewModel {
     
     var title: Observable<String>
     
-    init(country: Country) {
-        self.country = country
+    var country: Observable<Country>
+    
+    var borderedCountries: Observable<[Country]>
+    
+    init(country: Country, countriesService: CountriesServiceProtocol) {
         
-        title = Observable.just(self.country.name ?? "unknown")
+        self.title = .just(country.name ?? "unknown")
+        self.country = .just(country)
+        self.borderedCountries = countriesService.list(of: country.borders ?? []).asObservable()
     }
 }

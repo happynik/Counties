@@ -27,7 +27,6 @@ class CountriesListCoordinator: Coordinator<Void> {
         
         viewModel.showCountry
             .subscribe(onNext: { [unowned self] country in
-                print("open country\n\(country)")
                 _ = self.show(country: country, in: navigationController)
             }).disposed(by: bag)
         
